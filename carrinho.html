@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - KL Delivery</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Carrinho de Compras</h1>
+</header>
+
+<nav>
+    <a href="index.html">Restaurantes</a>
+    <a href="pedidos.html">Pedidos</a>
+</nav>
+
+<div class="container">
+    <h2>Itens no Carrinho</h2>
+    <div id="cartItems"></div>
+    <button onclick="finalizeOrder()" class="button">Finalizar Pedido</button>
+</div>
+
+<footer>
+    <p>&copy; 2024 KL Delivery</p>
+</footer>
+
+<script src="js/cart.js"></script> <!-- Inclui o arquivo cart.js -->
+<script>
+    // Função para exibir os itens do carrinho
+    function displayCart() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartItemsDiv = document.getElementById("cartItems");
+
+        if (cart.length === 0) {
+            cartItemsDiv.innerHTML = "<p>O carrinho está vazio.</p>";
+            return;
+        }
+
+        let cartHTML = "<ul>";
+        let total = 0;
+
+        cart.forEach(item => {
+            cartHTML += `<li>${item.name} - R$${item.price} x ${item.quantity}</li>`;
+            total += item.price * item.quantity;
+        });
+
+        cartHTML += `</ul><p>Total: R$${total.toFixed(2)}</p>`;
+        cartItemsDiv.innerHTML = cartHTML;
+    }
+
+    // Função para finalizar o pedido e salvar no histórico de pedidos
+    function finalizeOrder() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length === 0) {
+            alert("O carrinho está vazio.");
+            return;
+        }
+
+        // Calcula o total do pedido
+        const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+        // Cria um novo pedido
+        const newOrder = {
+            items: cart,
+            total: total.toFixed(2),
+            date: new Date().toLocaleString()
+        };
+
+        // Recupera os pedidos existentes e adiciona o novo pedido
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push(newOrder);
+        localStorage.setItem("orders", JSON.stringify(orders));
+
+        // Limpa o carrinho e atualiza a visualização
+        localStorage.removeItem("cart");
+        displayCart();
+        alert("Pedido finalizado com sucesso!");
+    }
+
+    // Exibir o carrinho ao carregar a página
+    displayCart();
+</script>
+</body>
+</html>
