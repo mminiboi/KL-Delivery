@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luiz's Bar - KL Delivery</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            display: none;
+            margin-bottom: 20px; /* Espaço entre o mapa e as avaliações */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Luiz's Bar</h1>
+</header>
+
+<nav>
+    <a href="index.html">Restaurantes</a>
+    <a href="carrinho.html">Carrinho</a>
+    <a href="pedidos.html">Pedidos</a>
+</nav>
+
+<div class="container">
+    <h2>Cardápio</h2>
+    <div class="menu">
+        <div class="menu-item">
+            <img src="images\x burguer.jpg" alt="Prato 1" class="food-img">
+            <h4>X-burguer</h4>
+            <p>R$20,00</p>
+            <button onclick="addToCart('X-burguer', 20)" class="button">Adicionar ao Carrinho</button>
+        </div>
+        <div class="menu-item">
+            <img src="images\coca.jpeg" alt="Prato 2" class="food-img">
+            <h4>Coca-cola</h4>
+            <p>R$15,00</p>
+            <button onclick="addToCart('Coca-cola', 15)" class="button">Adicionar ao Carrinho</button>
+        </div>
+    </div>
+    <button onclick="showMap()" class="button">Ver Mapa com Rota</button>
+    <div id="map"></div> <!-- Div para o mapa -->
+
+    <h3>Avaliações</h3>
+    <div class="review">
+        <p>Lucas Silva - ★★★☆☆</p>
+        <p>Bom atendimento, mas o tempo de espera foi um pouco longo.</p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 KL Delivery</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="js/map.js"></script>
+<script src="js/cart.js"></script> <!-- Inclui o arquivo cart.js -->
+<script>
+    function showMap() {
+        const mapDiv = document.getElementById("map");
+        mapDiv.style.display = "block"; // Exibe o mapa
+        initMapA(); // Inicializa o mapa para o Restaurante A
+    }
+</script>
+</body>
+</html>

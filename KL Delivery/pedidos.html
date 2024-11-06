@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - KL Delivery</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Histórico de Pedidos</h1>
+</header>
+
+<nav>
+    <a href="index.html">Restaurantes</a>
+    <a href="carrinho.html">Carrinho</a>
+</nav>
+
+<div class="container">
+    <h2>Pedidos Realizados</h2>
+    <div id="orderHistory"></div>
+</div>
+
+<footer>
+    <p>&copy; 2024 KL Delivery</p>
+</footer>
+
+<script>
+    // Função para exibir o histórico de pedidos
+    function displayOrders() {
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+        const orderHistoryDiv = document.getElementById("orderHistory");
+
+        if (orders.length === 0) {
+            orderHistoryDiv.innerHTML = "<p>Você ainda não fez nenhum pedido.</p>";
+            return;
+        }
+
+        let ordersHTML = "";
+        orders.forEach((order, index) => {
+            ordersHTML += `<div class="order">
+                <h3>Pedido ${index + 1}</h3>
+                <p>Data: ${order.date}</p>
+                <ul>`;
+            
+            order.items.forEach(item => {
+                ordersHTML += `<li>${item.name} - R$${item.price} x ${item.quantity}</li>`;
+            });
+
+            ordersHTML += `</ul><p>Total: R$${order.total}</p></div><hr>`;
+        });
+
+        orderHistoryDiv.innerHTML = ordersHTML;
+    }
+
+    // Exibir os pedidos ao carregar a página
+    displayOrders();
+</script>
+</body>
+</html>
